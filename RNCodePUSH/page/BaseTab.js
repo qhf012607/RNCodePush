@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
  import funneyScreen from '../Pages/Two/Funney'
  import novelScreen from '../Pages/Three/Novel'
 import newDetailScreen from '../Pages/One/NewDetail'
-
+import FunneyVideoPlayerScreen from '../Pages/Two/FunneyVideoPlayer'
 class DetailsScreen extends NiceScreen {
  // 定义属性
  static propTypes = {
@@ -157,7 +157,13 @@ const TwoNave = createStackNavigator({
       screen:funneyScreen,
      navigationOptions:{
        title:'搞笑'
-     }
+     },
+    },
+    video: {
+      screen:FunneyVideoPlayerScreen,
+     navigationOptions:{
+       title:'播放'
+     },
 },
 //     Cool: {
 //         screen:SettingsScreen,
@@ -183,6 +189,7 @@ const ThreeNave = createStackNavigator({
              title:'小说'
            }
       },
+  
 //     Cool: {
 //         screen:SettingsScreen,
 //     },

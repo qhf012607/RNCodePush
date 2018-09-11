@@ -1,7 +1,7 @@
 import React from 'react';
 import NiceScreen from "../../page/Nice";
 import ScrollableTabView, {DefaultTabBar, ScrollableTabBar} from 'react-native-scrollable-tab-view';
-import { Image, FlatList, StyleSheet, Text, View,RefreshControl ,Dimensions,Button} from "react-native";
+import { Image,TouchableOpacity, FlatList, StyleSheet, Text, View,RefreshControl ,Dimensions,Button} from "react-native";
 import NetTool from "../../Tool/NetTool";
 import { itemTitleCell } from '../One/News';
  //import {ImageCell} from '../Two'
@@ -20,6 +20,7 @@ export default class funneyScreen extends NiceScreen{
         }
         this.checkUpdate = this.checkUpdate.bind(this);
         this.getCellitem = this.getCellitem.bind(this);
+        this.playVideo = this.playVideo.bind(this);
     }
     componentDidMount(){
         this.fetchData(1,1);
@@ -67,27 +68,30 @@ export default class funneyScreen extends NiceScreen{
     }
     getCellitem({item,index}){
         if (item.cdn_img) {
-            return <ImageCell data={item}/>
+            return <ImageCell data={item} playVideo={this.playVideo} />
         }
         return <View>
-            <Button  title = "setting"  onPress={this.checkUpdate}/>
+            <Button  title = "😁😁😁"  onPress={this.checkUpdate}/>
             <Text>{item.text}</Text>
 
             </View>
     };
+    playVideo(url){
+        this.props.navigation.navigate('video',{url:url})
+    }
 
     checkUpdate(){
      //   codePush.sync
-        codePush.sync({
-            updateDialog: {
-              appendReleaseDescription: true,
-              descriptionPrefix:'\n\n更新内容：\n',
-              title:'更新',
-              mandatoryUpdateMessage:'',
-              mandatoryContinueButtonLabel:'更新',
-            },
-            mandatoryInstallMode:codePush.InstallMode.IMMEDIATE,
-          });
+        // codePush.sync({
+        //     updateDialog: {
+        //       appendReleaseDescription: true,
+        //       descriptionPrefix:'\n\n更新内容：\n',
+        //       title:'更新',
+        //       mandatoryUpdateMessage:'',
+        //       mandatoryContinueButtonLabel:'更新',
+        //     },
+        //     mandatoryInstallMode:codePush.InstallMode.IMMEDIATE,
+        //   });
     }
     fetchData(index,page){
         NetTool.get('satinApi',{type:index,page:page},(json)=>{
@@ -129,21 +133,52 @@ export default class funneyScreen extends NiceScreen{
 }
 export class ImageCell extends React.Component{
     constructor(props){
-        super(props);
-
+        super(props)
+        this.state={
+            isImageloaded:false
+        }
+    }
+    componentDidMount(){
+        this.playVideo = this.props.playVideo
     }
     render(){
-        var {width} =  Dimensions.get('window');
-        let strWdith = this.props.data.width;
+        var {width} =  Dimensions.get('window')
+        let strWdith = this.props.data.width
         let strheight = this.props.data.height
         let scale = parseInt(strheight)/parseInt(strWdith)
         let height = width * scale
-        console.log(this.props.height);
-        return <View>
-             <Text style={{backgroundColor:'black'}}>{this.props.data.text}</Text>
+        let videoUrl = ''
+        videoUrl = this.props.data.videouri
+        if (videoUrl.length > 0) {
+            return  <TouchableOpacity onPress={()=>{
+                this.playVideo(videoUrl)
+            }}>
            
+            <View style={{justifyContent:'center'}}>
+           
+             <Text style={{backgroundColor:'black'}}>{this.props.data.text}</Text>
+            <Image style={{width:width,height:height}} source={{uri:this.props.data.cdn_img}}/>
+            <Image style={{alignSelf:'center',width:50,height:50,position:'absolute'}} source={require('../../Img/player.png')}/>
+            
+            </View>
+            </TouchableOpacity>
+        }else{
 
-            <Image style={{width:width,backgroundColor:'blue',height:height}} source={{uri:this.props.data.cdn_img}}/>
-        </View>
+            return <View>
+            <Text style={{backgroundColor:'black'}}>{this.props.data.text}</Text>
+           <Image style={{width:width,height:height}} source={ {uri: this.props.data.cdn_img} } onloadstart={()=>{
+            
+           }} onLoad={()=>{
+            this.setState({
+                isImageloading:true
+           })
+           }} />
+           </View>
+        }
+        
+    }
+
+    playVideo(videoUrl){
+       
     }
 }
