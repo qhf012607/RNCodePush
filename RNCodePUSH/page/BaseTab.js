@@ -156,7 +156,7 @@ const TwoNave = createStackNavigator({
     funney :  {
       screen:funneyScreen,
      navigationOptions:{
-       title:'段子'
+       title:'搞笑'
      }
 },
 //     Cool: {
