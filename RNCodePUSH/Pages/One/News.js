@@ -28,7 +28,9 @@ export default  class newsScreen extends NiceScreen{
         updateDialog: {
             optionalInstallButtonLabel: '更新',
             optionalUpdateMessage: '有新版本了，请更新之后使用',
-            title: '更新提示'
+            title: '更新提示',
+            mandatoryContinueButtonLabel:'立即更新',
+            mandatoryUpdateMessage:'必须更新之后体验 更多精彩'
         },
         installMode: CodePush.InstallMode.ON_NEXT_RESTART
     });
@@ -128,7 +130,10 @@ export  class itemTitleCell extends React.Component {
   }
 
   static getTitleView(item){
-    return <TouchableOpacity>
+    this.urlString = item['link']
+    return <TouchableOpacity onPress={()=>{
+      this.clickCallBack( this.urlString)
+    }}>
       <View >
       <View style={{height:10}} />
        <Text style={{left:10,top:0,fontSize:24}}>{item.title} </Text>

@@ -1,6 +1,6 @@
 import {
     createBottomTabNavigator,
-    createStackNavigator,
+    createStackNavigator,StackActions, NavigationActions,createSwitchNavigator
   } from 'react-navigation';
   import React from 'react';
 import { Button, Text, View } from 'react-native';
@@ -12,6 +12,8 @@ import PropTypes from 'prop-types'
  import novelScreen from '../Pages/Three/Novel'
 import newDetailScreen from '../Pages/One/NewDetail'
 import FunneyVideoPlayerScreen from '../Pages/Two/FunneyVideoPlayer'
+import novelDetailScreen from '../Pages/Three/NovelDetail'
+
 class DetailsScreen extends NiceScreen {
  // 定义属性
  static propTypes = {
@@ -107,6 +109,20 @@ constructor(props) {
         })
       }
  }
+ class guaids extends React.Component{
+  componentDidMount(){
+      setTimeout(() => {
+         this.props.navigation.navigate('App');
+      }, 2000);
+  }
+
+  render(){
+    return <View>
+      <Text>欢迎光临</Text>
+    </View>
+  }
+} 
+
   
 const OneNave = createStackNavigator(
     {
@@ -183,12 +199,18 @@ TwoNave.navigationOptions = ({ navigation }) => {
 };
 
 const ThreeNave = createStackNavigator({
-  funney :  {
+  novel :  {
             screen:novelScreen,
            navigationOptions:{
              title:'小说'
            }
       },
+  novelDetail:  {
+    screen:novelDetailScreen,
+   navigationOptions:{
+     title:'阅读'
+   }
+}
   
 //     Cool: {
 //         screen:SettingsScreen,
@@ -198,7 +220,17 @@ const ThreeNave = createStackNavigator({
 // },
 });
 
-export default createBottomTabNavigator(
+ThreeNave.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+  return {
+    tabBarVisible
+  };
+};
+
+export default tabbar = createBottomTabNavigator(
     { 
       新闻: OneNave,
       搞笑: TwoNave,
@@ -211,4 +243,14 @@ export default createBottomTabNavigator(
       }
 );
 
-  
+export const rootNave = createSwitchNavigator({
+  welcome: guaids,
+  App: tabbar
+});
+
+// const resetAction = StackActions.reset({
+//   index: 0,
+//   actions: [NavigationActions.navigate({ routeName:'tabbar' })],
+// });
+
+
