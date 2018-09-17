@@ -1,12 +1,13 @@
 import NiceScreen from "../../page/Nice";
 import React from 'react';
-import { Button,TouchableOpacity,Image, View, Text ,StyleSheet,SectionList,ActivityIndicator} from 'react-native';
+import { Button,RefreshControl,TouchableOpacity,Image, View, Text ,StyleSheet,SectionList,ActivityIndicator} from 'react-native';
 //import { yellow } from "../../node_modules/kleur";
 import NetTool from "../../Tool/NetTool";
 import {newsApi} from "../../common/netUrl";
 import PropTypes from 'prop-types';
 import CodePush from 'react-native-code-push'
 export default  class newsScreen extends NiceScreen{
+  
     constructor(props){
         super(props);
         this.state = {
@@ -19,8 +20,10 @@ export default  class newsScreen extends NiceScreen{
             auto:[],
             news:[],
             loaded:false,
+            freshing:false
         }
      this.tableitem = this.tableitem.bind(this)
+     this.fetctData = this.fetctData.bind(this)
     }
     componentDidMount(){
        this.fetctData();
@@ -37,6 +40,9 @@ export default  class newsScreen extends NiceScreen{
     }
 
     fetctData(){
+      this.setState({
+        freshing:true
+      })
       NetTool.get(newsApi,null,(newsinfo)=>{
           const{tech,sports,ent,money,toutiao,war,auto} = newsinfo['data'];
           this.setState(
@@ -49,6 +55,7 @@ export default  class newsScreen extends NiceScreen{
               war:war,
               auto:auto,
               loaded:true,
+              freshing:false,
               news : [{title:'头条',data:toutiao},{title:'教育',data:tech},{title:'体育',data:sports},{title:'环境',data:ent},{title:'金融',data:money},{title:'军事',data:war},{title:'其他',data:auto}]
             }
           )
@@ -59,7 +66,7 @@ export default  class newsScreen extends NiceScreen{
 
     render(){
       if (this.state.loaded){
-        return <SectionList  style={{}} stickySectionHeadersEnabled={false} sections={this.state.news} renderItem={this.tableitem}  renderSectionHeader={this.tableHeader} keyExtractor={(item, index) => index} />
+        return <SectionList  style={{}}  refreshControl={this.freshComponet()}  stickySectionHeadersEnabled={false}  sections={this.state.news} renderItem={this.tableitem}  renderSectionHeader={this.tableHeader} keyExtractor={(item, index) => index} ListEmptyComponent={this.emptyView}/>
       }else{
         return this.renderLoadingView()
       }
@@ -83,6 +90,9 @@ export default  class newsScreen extends NiceScreen{
     //     />
     //   </View>
     };
+    freshComponet(){
+      return <RefreshControl title={'换一批'} refreshing={this.state.freshing} onRefresh={this.fetctData}/>
+    }
     renderLoadingView() {
       return (
         <View style={{flex:1,justifyContent:'center'}} onStartShouldSetResponder={()=>true} onResponderGrant={
@@ -94,7 +104,12 @@ export default  class newsScreen extends NiceScreen{
         </View>
       );
     }
-  
+    emptyView(){
+      return <View>
+        <button title={'重新加载'} onClick={this.fetctData}/>
+      </View>
+    }
+
     tableHeader({section}){
       return <View style={{backgroundColor:'lightGray'}}>
                <View style={{height:10,backgroundColor:'rgba(234,247,253,1)'}}/>

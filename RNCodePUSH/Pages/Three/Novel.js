@@ -10,6 +10,7 @@ export default class novelScreen extends NiceScreen{
         this.state = {
             list:[],
             isloaded:false,
+            refreshing:false
         }
      this.fetctData = this.fetctData.bind(this)
      this.getItemCell = this.getItemCell.bind(this)
@@ -19,16 +20,17 @@ export default class novelScreen extends NiceScreen{
     }
      render(){
          if(this.state.isloaded){
-            return <FlatList data={this.state.list} renderItem={this.getItemCell} />
+            return <FlatList data={this.state.list} renderItem={this.getItemCell} onRefresh={this.fetctData} refreshing={this.state.refreshing}/>
          }else{
           
             return this.renderLoadingView()
          }
        
      }
+    
      getItemCell({item,index}){
         var {width} =  Dimensions.get('window')
-        let leftx = width - 200
+        let leftx = width - 40
         return <TouchableOpacity onPress={()=>{
             this.clickBook(item)
         }}>
@@ -39,7 +41,7 @@ export default class novelScreen extends NiceScreen{
                 <Text style={{marginTop:10}}>{item.author_name}</Text>
                 <Text numberOfLines={2} style={{width:200,marginTop:10}}>{item.book_info}</Text>
             </View>
-            <View style={{width:30,top:20,left:10,height:50}}>
+            <View style={{left:leftx,width:30,top:20,height:50,position:'absolute'}}>
                 <Text>{item.class_name} </Text>
             </View>
         </View>
@@ -61,11 +63,15 @@ export default class novelScreen extends NiceScreen{
       }
 
      fetctData(){
+         this.setState({
+             refreshing:true
+         })
         NetTool.get(novaelApi,null,(newsinfo)=>{
             this.setState(
               {
                 list:newsinfo['data'],
-                isloaded:true
+                isloaded:true,
+                refreshing:false
               }
             )
         },(error)=>{

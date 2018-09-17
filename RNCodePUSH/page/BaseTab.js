@@ -1,9 +1,9 @@
 import {
     createBottomTabNavigator,
-    createStackNavigator,StackActions, NavigationActions,createSwitchNavigator
+    createStackNavigator,StackActions, NavigationActions,createSwitchNavigator,
   } from 'react-navigation';
   import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View,Image, } from 'react-native';
 import {CoolScreen} from './Nice'
 import NiceScreen from './Nice'
 import PropTypes from 'prop-types'
@@ -129,7 +129,7 @@ const OneNave = createStackNavigator(
       news:{
         screen:newsScreen,
         navigationOptions:{
-          header:null
+          header:null,
         }
       },
       NewDetail :  {
@@ -171,23 +171,26 @@ OneNave.navigationOptions = ({ navigation }) => {
 const TwoNave = createStackNavigator({
     funney :  {
       screen:funneyScreen,
-     navigationOptions:{
-       title:'搞笑'
-     },
+     
     },
     video: {
       screen:FunneyVideoPlayerScreen,
      navigationOptions:{
-       title:'播放'
-     },
-},
-//     Cool: {
-//         screen:SettingsScreen,
-//     },
-//    Details: {
-//     screen:DetailsScreen,
-// },
-});
+       title:'播放',
+     }
+    },
+}
+);
+
+// navigationOptions:({navigate})=>{
+//   tabBarIcon: ({ focused, tintColor }) => {
+//     if (focused){
+//       return <Image source={require('../Img/index_u.png')}/>
+//    }else{
+//     return <Image source={require('../Img/index.png')}/>
+//    }
+//   } 
+// }
 TwoNave.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
   if (navigation.state.index > 0) {
@@ -208,7 +211,8 @@ const ThreeNave = createStackNavigator({
   novelDetail:  {
     screen:novelDetailScreen,
    navigationOptions:{
-     title:'阅读'
+     title:'阅读',
+     
    }
 }
   
@@ -232,15 +236,54 @@ ThreeNave.navigationOptions = ({ navigation }) => {
 
 export default tabbar = createBottomTabNavigator(
     { 
-      新闻: OneNave,
-      搞笑: TwoNave,
-      小说: ThreeNave
+      新闻: {
+        screen:OneNave,
+        navigationOptions: {
+          tabBarLabel: '新闻',
+          tabBarIcon: ({ tintColor, focused }) => (
+    
+            focused ?  <Image style={{width:26,height:26}} source={require( '../Img/index_u.png')}/> : <Image style={{width:26,height:26}} source={require( '../Img/index.png')}/>
+            
+          ),
+      
+        },
+      },
+      搞笑: {
+        screen:TwoNave,
+        navigationOptions: {
+          tabBarLabel: '搞笑',
+         
+          tabBarIcon: ({ tintColor, focused }) => (
+    
+            focused ?  <Image style={{width:26,height:26}} source={require( '../Img/like_u.png')}/> : <Image style={{width:26,height:26}} source={require( '../Img/like.png')}/>
+            
+          ),
+        },
+        
+      },
+      小说:{
+        screen:ThreeNave,
+        navigationOptions: {
+          tabBarLabel: '小说',
+          tabBarIcon: ({ tintColor, focused }) => (
+    
+            focused ?  <Image style={{width:26,height:26}} source={require( '../Img/ranking_u.png')}/> : <Image style={{width:26,height:26}} source={require( '../Img/ranking.png')}/>
+            
+          ),
+        },
+      } ,
     },{
-        activeTintColor: '#f0edf6',
-        inactiveTintColor: '#3e2465',
-        barStyle: { backgroundColor: '#694fad' },
-        swipeEnabled:true,
+      tabBarOptions: {
+        activeTintColor: 'black',
+        labelStyle: {
+          fontSize: 12,
+        },
+        // style: {
+        //   backgroundColor: 'blue',
+        // },
       }
+    }
+   
 );
 
 export const rootNave = createSwitchNavigator({

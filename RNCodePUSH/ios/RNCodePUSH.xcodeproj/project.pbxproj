@@ -521,6 +521,7 @@
 		13B07FAE1A68108700A75B9A /* RNCodePUSH */ = {
 			isa = PBXGroup;
 			children = (
+				D5ED7695214BA34B001B472D /* BrigeModule */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -672,6 +673,14 @@
 				D5BF52CC2143D9990061FE92 /* libCodePush.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D5ED7695214BA34B001B472D /* BrigeModule */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = BrigeModule;
+			path = RNCodePUSH/BrigeModule;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
