@@ -171,7 +171,9 @@ OneNave.navigationOptions = ({ navigation }) => {
 const TwoNave = createStackNavigator({
     funney :  {
       screen:funneyScreen,
-     
+      navigationOptions:{
+        title:'段子'
+      }
     },
     video: {
       screen:FunneyVideoPlayerScreen,

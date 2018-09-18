@@ -1,7 +1,7 @@
 import React from 'react';
 import NiceScreen from "../../page/Nice";
 import ScrollableTabView, {DefaultTabBar, ScrollableTabBar} from 'react-native-scrollable-tab-view';
-import { Image,TouchableOpacity, FlatList, StyleSheet, Text, View,RefreshControl ,Dimensions,Button} from "react-native";
+import { Image,TouchableOpacity, FlatList,ActivityIndicator, StyleSheet, Text, View,RefreshControl ,Dimensions,Button} from "react-native";
 import NetTool from "../../Tool/NetTool";
 import { itemTitleCell } from '../One/News';
  //import {ImageCell} from '../Two'
@@ -17,10 +17,13 @@ export default class funneyScreen extends NiceScreen{
             texts:[],
             voices:[],
             loaded:false,
+            freshing:false,
         }
         this.checkUpdate = this.checkUpdate.bind(this);
         this.getCellitem = this.getCellitem.bind(this);
         this.playVideo = this.playVideo.bind(this);
+        this.freshComponet = this.freshComponet.bind(this);
+        this.updateTableData = this.updateTableData.bind(this);
     }
     componentDidMount(){
         this.fetchData(1,1);
@@ -30,19 +33,28 @@ export default class funneyScreen extends NiceScreen{
         this.fetchData(4,1);
     }
     render(){
-        return <ScrollableTabView
-        style={{marginTop: 0, }}
-        initialPage={0}
-        renderTabBar={() => <ScrollableTabBar />}
-      >
-        {
-            this.state.all.map((itemTitleCell,index)=>{
-                return  <FlatList tabLabel={itemTitleCell} data={this.getData(index)} renderItem={this.getCellitem}></FlatList>
-            })
+        if (this.state.loaded){
+            return <ScrollableTabView
+            style={{marginTop: 0, }}
+            initialPage={0}
+            renderTabBar={() => <ScrollableTabBar />}
+          >
+            {
+                this.state.all.map((itemTitleCell,index)=>{
+                    return  <FlatList refreshControl={this.freshComponet(index)} tabLabel={itemTitleCell} data={this.getData(index)} renderItem={this.getCellitem}></FlatList>
+                })
+            }
+          </ScrollableTabView>;
+        }else{
+            return this.renderLoadingView()
         }
-      </ScrollableTabView>;
+       
     }
-
+    freshComponet(index){
+        return <RefreshControl title={'换一批'} refreshing={this.state.freshing} onRefresh={()=>{
+            this.updateTableData(index,1)
+        }}/>
+      }
     getData(index){
         var arr = []
         switch (index) {
@@ -66,6 +78,17 @@ export default class funneyScreen extends NiceScreen{
         }
        return arr
     }
+    renderLoadingView() {
+        return (
+          <View style={{flex:1,justifyContent:'center'}} onStartShouldSetResponder={()=>true} onResponderGrant={
+            (evt) => {
+            }
+          }>
+          <ActivityIndicator size="large" color="#0000ff" />
+          <Text style={{textAlign:'center'}}>正在加载..</Text>
+          </View>
+        );
+      }
     getCellitem({item,index}){
         if (item.cdn_img) {
             return <ImageCell data={item} playVideo={this.playVideo} />
@@ -93,8 +116,18 @@ export default class funneyScreen extends NiceScreen{
         //     mandatoryInstallMode:codePush.InstallMode.IMMEDIATE,
         //   });
     }
+    updateTableData(index,page){
+        this.setState({
+            freshing:true
+          })
+          this.fetchData(index,page)
+    }
     fetchData(index,page){
         NetTool.get('satinApi',{type:index,page:page},(json)=>{
+            this.setState({
+                freshing:false,
+                loaded:true
+            });
             const{data} = json
             switch (index) {
                 case 1:

@@ -20,14 +20,18 @@ export default class novelScreen extends NiceScreen{
     }
      render(){
          if(this.state.isloaded){
-            return <FlatList data={this.state.list} renderItem={this.getItemCell} onRefresh={this.fetctData} refreshing={this.state.refreshing}/>
+            return <FlatList data={this.state.list} ListFooterComponent={this.tableFootView()}  renderItem={this.getItemCell} onRefresh={this.fetctData} refreshing={this.state.refreshing}/>
          }else{
           
             return this.renderLoadingView()
          }
        
      }
+     tableFootView(){
+        return <Button title={'不喜欢换一批'} onPress={this.fetctData} />
+     }
     
+
      getItemCell({item,index}){
         var {width} =  Dimensions.get('window')
         let leftx = width - 40
