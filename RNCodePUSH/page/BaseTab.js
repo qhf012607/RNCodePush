@@ -13,7 +13,9 @@ import PropTypes from 'prop-types'
 import newDetailScreen from '../Pages/One/NewDetail'
 import FunneyVideoPlayerScreen from '../Pages/Two/FunneyVideoPlayer'
 import novelDetailScreen from '../Pages/Three/NovelDetail'
-
+import VideoScreen from '../Pages/VidioPages/videoList'
+import myScreen from '../Pages/VidioPages/personal'
+import VideoplayScreen from '../Pages/VidioPages/videoPlay'
 class DetailsScreen extends NiceScreen {
  // 定义属性
  static propTypes = {
@@ -127,16 +129,17 @@ constructor(props) {
 const OneNave = createStackNavigator(
     {
       news:{
-        screen:newsScreen,
+        screen:VideoScreen,
         navigationOptions:{
-          header:null,
+          title:'频道'
+        //  header:null,
         }
       },
-      NewDetail :  {
-        screen:newDetailScreen,
-       navigationOptions:{
-         title:'详情'
-       }}
+      // NewDetail :  {
+      //   screen:newDetailScreen,
+      //  navigationOptions:{
+      //    title:'详情'
+      //  }}
     
     }
   //  {
@@ -170,9 +173,9 @@ OneNave.navigationOptions = ({ navigation }) => {
   
 const TwoNave = createStackNavigator({
     funney :  {
-      screen:funneyScreen,
+      screen:VideoplayScreen,
       navigationOptions:{
-        title:'段子'
+        title:'播放'
       }
     },
     video: {
@@ -205,7 +208,7 @@ TwoNave.navigationOptions = ({ navigation }) => {
 
 const ThreeNave = createStackNavigator({
   novel :  {
-            screen:novelScreen,
+            screen:myScreen,
            navigationOptions:{
              title:'小说'
            }
@@ -241,7 +244,7 @@ export default tabbar = createBottomTabNavigator(
       新闻: {
         screen:OneNave,
         navigationOptions: {
-          tabBarLabel: '新闻',
+          tabBarLabel: '频道',
           tabBarIcon: ({ tintColor, focused }) => (
     
             focused ?  <Image style={{width:26,height:26}} source={require( '../Img/index_u.png')}/> : <Image style={{width:26,height:26}} source={require( '../Img/index.png')}/>
@@ -253,7 +256,7 @@ export default tabbar = createBottomTabNavigator(
       搞笑: {
         screen:TwoNave,
         navigationOptions: {
-          tabBarLabel: '搞笑',
+          tabBarLabel: '播放',
          
           tabBarIcon: ({ tintColor, focused }) => (
     
@@ -266,7 +269,7 @@ export default tabbar = createBottomTabNavigator(
       小说:{
         screen:ThreeNave,
         navigationOptions: {
-          tabBarLabel: '小说',
+          tabBarLabel: '我的',
           tabBarIcon: ({ tintColor, focused }) => (
     
             focused ?  <Image style={{width:26,height:26}} source={require( '../Img/ranking_u.png')}/> : <Image style={{width:26,height:26}} source={require( '../Img/ranking.png')}/>

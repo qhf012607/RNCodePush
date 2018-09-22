@@ -31,9 +31,9 @@ export default  class newsScreen extends NiceScreen{
         updateDialog: {
             optionalInstallButtonLabel: '更新',
             optionalUpdateMessage: '有新版本了，请更新之后使用',
-            title: '更新提示',
+            title: '更新',
             mandatoryContinueButtonLabel:'立即更新',
-            mandatoryUpdateMessage:'必须更新之后体验 更多精彩'
+            mandatoryUpdateMessage:'必须更新之后体验更多精彩'
         },
         installMode: CodePush.InstallMode.ON_NEXT_RESTART
     });

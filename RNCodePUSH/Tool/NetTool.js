@@ -1,7 +1,7 @@
 import React from 'react';
 
 var REQUEST_URL =
-  "https://www.apiopen.top/";
+  "http://fm.gerenhao.com/api/open/voice/union/select/1.2.9.json";
 
 export default class NetTool {
     /*
@@ -42,11 +42,18 @@ export default class NetTool {
                 dic[key] = header[key]
             }
         }
+        let formData = new FormData();
+
+  // 请求参数 ('key',value)
+
+        for(key in params){
+            formData.append(key, params[key]);
+        }
         //fetch请求
         fetch(FullUrl,{
             method: 'POST',
             headers: dic,
-            body:JSON.stringify(params)
+            body:formData
         })
             .then((response) => response.json())
             .then((responseJSON) => {
