@@ -6,6 +6,7 @@ export  default class NiceScreen extends React.Component {
   constructor(props){
     super(props);
   }
+ 
     // 定义属性
     static propTypes = {
         name:PropTypes.string,

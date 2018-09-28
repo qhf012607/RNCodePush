@@ -378,6 +378,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B9138D62453E440EBD9533A1 /* libCodePush.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libCodePush.a; sourceTree = "<group>"; };
+		D5616018215CCE9500C9A0C3 /* RNCodePUSH.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = RNCodePUSH.entitlements; path = RNCodePUSH/RNCodePUSH.entitlements; sourceTree = "<group>"; };
 		E745458890EB4A93B0F674F7 /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/ios/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -521,6 +522,7 @@
 		13B07FAE1A68108700A75B9A /* RNCodePUSH */ = {
 			isa = PBXGroup;
 			children = (
+				D5616018215CCE9500C9A0C3 /* RNCodePUSH.entitlements */,
 				D5ED7695214BA34B001B472D /* BrigeModule */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -775,6 +777,11 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = NNCL5T2CTT;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.InterAppAudio = {
+								enabled = 0;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1350,7 +1357,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rhonin.news;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rhonin.radionews;
 				PRODUCT_NAME = RNCodePUSH;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1372,7 +1379,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rhonin.news;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rhonin.radionews;
 				PRODUCT_NAME = RNCodePUSH;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";

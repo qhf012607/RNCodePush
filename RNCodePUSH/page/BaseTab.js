@@ -16,6 +16,7 @@ import novelDetailScreen from '../Pages/Three/NovelDetail'
 import VideoScreen from '../Pages/VidioPages/videoList'
 import myScreen from '../Pages/VidioPages/personal'
 import VideoplayScreen from '../Pages/VidioPages/videoPlay'
+import VideoCollectScreen from '../Pages/VidioPages/videoCollectList'
 class DetailsScreen extends NiceScreen {
  // 定义属性
  static propTypes = {
@@ -210,20 +211,17 @@ const ThreeNave = createStackNavigator({
   novel :  {
             screen:myScreen,
            navigationOptions:{
-             title:'小说'
+             title:'我的',
+             header:null
            }
       },
-  novelDetail:  {
-    screen:novelDetailScreen,
-   navigationOptions:{
-     title:'阅读',
-     
-   }
-}
+  history:  {
+    screen:VideoCollectScreen,
+},
   
-//     Cool: {
-//         screen:SettingsScreen,
-//     },
+    Cool: {
+        screen:SettingsScreen,
+    },
 //    Details: {
 //     screen:DetailsScreen,
 // },
@@ -258,9 +256,9 @@ export default tabbar = createBottomTabNavigator(
         navigationOptions: {
           tabBarLabel: '播放',
          
-          tabBarIcon: ({ tintColor, focused }) => (
+          tabBarIcon: ({ tintColor, focused }) => (//like.png
     
-            focused ?  <Image style={{width:26,height:26}} source={require( '../Img/like_u.png')}/> : <Image style={{width:26,height:26}} source={require( '../Img/like.png')}/>
+            focused ?  <Image style={{width:26,height:26}} source={require( '../Img/ranking_u.png')}/> : <Image style={{width:26,height:26}} source={require( '../Img/ranking.png')}/>
             
           ),
         },
@@ -271,9 +269,7 @@ export default tabbar = createBottomTabNavigator(
         navigationOptions: {
           tabBarLabel: '我的',
           tabBarIcon: ({ tintColor, focused }) => (
-    
-            focused ?  <Image style={{width:26,height:26}} source={require( '../Img/ranking_u.png')}/> : <Image style={{width:26,height:26}} source={require( '../Img/ranking.png')}/>
-            
+            focused ?  <Image style={{width:26,height:26}} source={require( '../Img/like_u.png')}/> : <Image style={{width:26,height:26}} source={require( '../Img/like.png')}/>
           ),
         },
       } ,
